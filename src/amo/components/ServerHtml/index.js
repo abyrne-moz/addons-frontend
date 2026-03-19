@@ -192,6 +192,11 @@ export default class ServerHtml extends Component {
           {head.link.toComponent()}
 
           {head.script.toComponent()}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(){try{var t=localStorage.getItem('amo-theme-preference');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t)}}catch(e){}})()`,
+            }}
+          />
         </head>
         <body>
           <div id="react-view" dangerouslySetInnerHTML={{ __html: content }} />
