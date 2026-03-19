@@ -110,7 +110,7 @@ describe(__filename, () => {
   it('renders js provided', () => {
     render();
 
-    expect(getElements('script')[2]).toHaveAttribute('src', '/foo/amo-blah.js');
+    expect(getElements('script')[3]).toHaveAttribute('src', '/foo/amo-blah.js');
   });
 
   it('does not render i18n js in the assets list', () => {
@@ -131,7 +131,7 @@ describe(__filename, () => {
 
   it('renders js with SRI when present', () => {
     render();
-    const js = getElements('script')[2];
+    const js = getElements('script')[3];
 
     expect(js).toHaveAttribute('integrity', 'sha512-amo-js');
     expect(js).toHaveAttribute('crossOrigin', 'anonymous');
@@ -203,5 +203,15 @@ describe(__filename, () => {
     render();
     // This is defined in the `FakeApp` component.
     expect(getElement('link[rel="canonical"]')).toBeInTheDocument();
+  });
+
+  it('renders inline theme preference script in head', () => {
+    render();
+    const scripts = getElements('head script');
+    const themeScript = scripts[scripts.length - 1];
+
+    expect(themeScript).toBeInTheDocument();
+    expect(themeScript.innerHTML).toContain('amo-theme-preference');
+    expect(themeScript.innerHTML).toContain('data-theme');
   });
 });

@@ -1,4 +1,5 @@
 /* @flow */
+/* global window */
 const THEME_KEY = 'amo-theme-preference';
 
 export type ThemePreference = 'system' | 'light' | 'dark';
@@ -19,12 +20,18 @@ export function setStoredTheme(preference: ThemePreference) {
     return;
   }
 
+  const { documentElement } = document;
+
   if (preference === 'system') {
     window.localStorage.removeItem(THEME_KEY);
-    document.documentElement.removeAttribute('data-theme');
+    if (documentElement) {
+      documentElement.removeAttribute('data-theme');
+    }
   } else {
     window.localStorage.setItem(THEME_KEY, preference);
-    document.documentElement.setAttribute('data-theme', preference);
+    if (documentElement) {
+      documentElement.setAttribute('data-theme', preference);
+    }
   }
 }
 
@@ -41,7 +48,9 @@ export function getNextTheme(current: ThemePreference): ThemePreference {
   }
 }
 
-export function getEffectiveTheme(preference: ThemePreference): 'light' | 'dark' {
+export function getEffectiveTheme(
+  preference: ThemePreference,
+): 'light' | 'dark' {
   if (preference !== 'system') {
     return preference;
   }
