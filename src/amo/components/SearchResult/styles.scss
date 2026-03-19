@@ -60,7 +60,7 @@ $icon-default-size: 32px;
 
 .SearchResult-icon-wrapper--no-theme-image {
   align-items: center;
-  background: var(--amo-border-color);
+  background: var(--amo-placeholder-bg);
   color: var(--amo-text-body);
   display: flex;
   font-size: $font-size-default;

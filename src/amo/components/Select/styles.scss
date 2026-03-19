@@ -5,7 +5,7 @@
   @include padding-start(6px);
 
   appearance: none;
-  background: var(--amo-bg-input) url('~amo/components/Icon/img/triangle-down-black.svg')
+  background: var(--amo-select-bg) url('~amo/components/Icon/img/triangle-down-black.svg')
     no-repeat calc(100% - 10px) 50%;
   color: var(--amo-input-text);
   background-size: 12px;
