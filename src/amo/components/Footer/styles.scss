@@ -3,7 +3,7 @@
 .Footer {
   @include font-regular;
 
-  background: $footer-base-color;
+  background: var(--amo-bg-footer);
   color: $white;
   width: 100%;
 
@@ -39,7 +39,7 @@
     grid-template-areas:
       'logo amo-links browsers-links product-links'
       'legal-links legal-links legal-links legal-links'
-      'copyright copyright copyright language';
+      'copyright copyright theme language';
     grid-template-columns: 1fr 1fr 1fr 1fr;
     margin: 0 auto;
     max-width: $max-content-width;
@@ -163,4 +163,45 @@
     display: inline-block;
     font-family: sans-serif;
   }
+}
+
+.Footer-theme-toggle {
+  grid-area: theme;
+  margin-top: 40px;
+
+  @include respond-to(medium) {
+    margin-top: 7px;
+  }
+}
+
+.Footer-theme-toggle-button {
+  align-items: center;
+  background: none;
+  border: 1px solid transparentize($white, 0.7);
+  border-radius: $border-radius-s;
+  color: $white;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: $font-size-s;
+  gap: 6px;
+  padding: 4px 12px;
+  transition: border-color $transition-short ease-in-out;
+
+  &:hover {
+    border-color: $white;
+  }
+
+  &:focus {
+    @include focus;
+  }
+}
+
+.Footer-theme-toggle-icon {
+  display: inline-flex;
+  height: 16px;
+  width: 16px;
+}
+
+.Footer-theme-toggle-label {
+  white-space: nowrap;
 }

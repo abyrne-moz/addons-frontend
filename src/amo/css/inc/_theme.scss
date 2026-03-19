@@ -1,0 +1,70 @@
+// Theme definitions using CSS custom properties.
+// Light theme is the default; dark theme activates via:
+// 1. System preference: @media (prefers-color-scheme: dark)
+// 2. Manual toggle: [data-theme="dark"] on <html>
+// Manual override always wins (data-theme="light" forces light even if system is dark).
+
+:root {
+  // Page & content backgrounds
+  --amo-bg-page: #{$background-grey};
+  --amo-bg-content: #{$white};
+  --amo-bg-body: #{$header-base-color};
+  --amo-bg-header: #{$color-ink-80};
+  --amo-bg-footer: #{$footer-base-color};
+  --amo-bg-input: #{$white};
+
+  // Text colors
+  --amo-text-primary: #{$primary-font-color};
+  --amo-text-body: #{$body-font-color};
+  --amo-text-secondary: #{$sub-text-color};
+  --amo-text-heading: #{$text-color-default};
+
+  // Interactive colors
+  --amo-link-color: #{$link-color};
+  --amo-border-color: #{$grey-50};
+  --amo-input-text: #{$black};
+
+  // Misc
+  --amo-showmorecard-gradient: #{$showmorecard-gradient-color};
+  --amo-block-hover: #{$block-hover-white-color};
+  --amo-bg-grey: #{$background-grey};
+
+  color-scheme: light dark;
+}
+
+// Dark theme values — shared between system preference and manual toggle
+@mixin dark-theme {
+  --amo-bg-page: #1a1a2e;
+  --amo-bg-content: #252540;
+  --amo-bg-body: #0f0f1a;
+  --amo-bg-header: #0a0a1a;
+  --amo-bg-footer: #0a0a1a;
+  --amo-bg-input: #2a2a45;
+
+  --amo-text-primary: #e8e8ee;
+  --amo-text-body: #d0d0da;
+  --amo-text-secondary: #a0a0b0;
+  --amo-text-heading: #e0e0ea;
+
+  --amo-link-color: #{$blue-40};
+  --amo-border-color: #555568;
+  --amo-input-text: #e0e0ea;
+
+  --amo-showmorecard-gradient: #252540;
+  --amo-block-hover: #2e2e4a;
+  --amo-bg-grey: #1e1e34;
+
+  color-scheme: dark;
+}
+
+// System preference (only when user hasn't manually chosen)
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme='light']) {
+    @include dark-theme;
+  }
+}
+
+// Manual dark mode override
+html[data-theme='dark'] {
+  @include dark-theme;
+}

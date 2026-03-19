@@ -25,7 +25,7 @@ $icon-default-size: 32px;
   &:active,
   &:link,
   &:visited {
-    color: $text-color-default;
+    color: var(--amo-text-heading);
   }
 
   &:focus,
@@ -226,7 +226,7 @@ $icon-default-size: 32px;
 }
 
 .SearchResult--meta-section {
-  color: $sub-text-color;
+  color: var(--amo-text-secondary);
   font-size: $font-size-s;
   font-weight: normal;
   margin: 0;

@@ -8,6 +8,13 @@ import Link from 'amo/components/Link';
 import { makeQueryStringWithUTM, sanitizeHTML } from 'amo/utils';
 import translate from 'amo/i18n/translate';
 import Icon from 'amo/components/Icon';
+import {
+  getStoredTheme,
+  setStoredTheme,
+  getNextTheme,
+  getEffectiveTheme,
+} from 'amo/utils/theme';
+import type { ThemePreference } from 'amo/utils/theme';
 import type { I18nType } from 'amo/types/i18n';
 
 import './styles.scss';
@@ -27,11 +34,92 @@ type InternalProps = {|
   i18n: I18nType,
 |};
 
-export class FooterBase extends React.Component<InternalProps> {
+type State = {|
+  themePreference: ThemePreference,
+|};
+
+export class FooterBase extends React.Component<InternalProps, State> {
   static defaultProps: {| ...Props, ...DefaultProps |} = {
     _config: config,
     noLangPicker: false,
   };
+
+  constructor(props: InternalProps) {
+    super(props);
+    this.state = {
+      themePreference: getStoredTheme(),
+    };
+  }
+
+  onToggleTheme: () => void = () => {
+    const next = getNextTheme(this.state.themePreference);
+    setStoredTheme(next);
+    this.setState({ themePreference: next });
+  };
+
+  getThemeLabel(): string {
+    const { i18n } = this.props;
+    const { themePreference } = this.state;
+    const effective = getEffectiveTheme(themePreference);
+
+    switch (themePreference) {
+      case 'light':
+        return i18n.gettext('Light');
+      case 'dark':
+        return i18n.gettext('Dark');
+      default:
+        return effective === 'dark'
+          ? i18n.gettext('Auto (Dark)')
+          : i18n.gettext('Auto (Light)');
+    }
+  }
+
+  getThemeIcon(): React.Node {
+    const { themePreference } = this.state;
+    const effective = getEffectiveTheme(themePreference);
+
+    if (themePreference === 'system') {
+      // Monitor/system icon
+      return (
+        <svg
+          viewBox="0 0 16 16"
+          width="16"
+          height="16"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M2 3a1 1 0 011-1h10a1 1 0 011 1v7a1 1 0 01-1 1H3a1 1 0 01-1-1V3zm4.5 10h3v1h-3v-1zM5 14h6v-1H5v1z" />
+        </svg>
+      );
+    }
+    if (effective === 'dark') {
+      // Moon icon
+      return (
+        <svg
+          viewBox="0 0 16 16"
+          width="16"
+          height="16"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M6 2a6 6 0 108 8c-4.4 0-8-3.6-8-8z" />
+        </svg>
+      );
+    }
+    // Sun icon
+    return (
+      <svg
+        viewBox="0 0 16 16"
+        width="16"
+        height="16"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <circle cx="8" cy="8" r="3" />
+        <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    );
+  }
 
   render(): React.Node {
     const { _config, includeGoogleDisclaimer, i18n, noLangPicker } = this.props;
@@ -320,6 +408,22 @@ export class FooterBase extends React.Component<InternalProps> {
               ['a'],
             )}
           />
+
+          <div className="Footer-theme-toggle">
+            <button
+              className="Footer-theme-toggle-button"
+              onClick={this.onToggleTheme}
+              type="button"
+              title={i18n.gettext('Toggle color theme')}
+            >
+              <span className="Footer-theme-toggle-icon">
+                {this.getThemeIcon()}
+              </span>
+              <span className="Footer-theme-toggle-label">
+                {this.getThemeLabel()}
+              </span>
+            </button>
+          </div>
 
           {!noLangPicker && (
             <div className="Footer-language-picker">

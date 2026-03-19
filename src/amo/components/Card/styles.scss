@@ -70,7 +70,7 @@ $footer-padding: 10px;
   a:hover,
   a:link,
   a:visited {
-    color: $link-color;
+    color: var(--amo-link-color);
     display: block;
     font-weight: normal;
     padding: $footer-padding;
