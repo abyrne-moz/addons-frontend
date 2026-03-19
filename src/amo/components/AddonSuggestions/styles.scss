@@ -31,7 +31,7 @@
           padding: 12px 24px;
 
           &:hover {
-            background-color: $grey-10;
+            background-color: var(--amo-hover-bg);
             border-radius: $border-radius-default;
             cursor: pointer;
 

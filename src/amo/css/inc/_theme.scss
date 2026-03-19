@@ -28,6 +28,7 @@
   --amo-showmorecard-gradient: #{$showmorecard-gradient-color};
   --amo-block-hover: #{$block-hover-white-color};
   --amo-bg-grey: #{$background-grey};
+  --amo-hover-bg: #{$grey-10};
 
   color-scheme: light dark;
 }
@@ -53,6 +54,7 @@
   --amo-showmorecard-gradient: #252540;
   --amo-block-hover: #2e2e4a;
   --amo-bg-grey: #1e1e34;
+  --amo-hover-bg: #303050;
 
   color-scheme: dark;
 }

@@ -99,7 +99,7 @@
 
       .SearchResult-wrapper:focus,
       .SearchResult-wrapper:hover {
-        background-color: $grey-10;
+        background-color: var(--amo-hover-bg);
         border-radius: $border-radius-default;
 
         // stylelint-disable max-nesting-depth
